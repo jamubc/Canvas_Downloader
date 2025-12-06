@@ -1,4 +1,6 @@
-# Canvas_Downloader ![Open Source](https://img.shields.io/badge/Open_Source-brightgreen?style=flat-square) ![Educational](https://img.shields.io/badge/Educational-blue?style=flat-square) ![Canvas LMS](https://img.shields.io/badge/Canvas_LMS-red?style=flat-square&logo=canvas)
+# Canvas_Downloader 
+![Open Source](https://img.shields.io/badge/Open_Source-brightgreen?style=flat-square) ![Educational](https://img.shields.io/badge/Educational-blue?style=flat-square) ![Canvas LMS](https://img.shields.io/badge/Canvas_LMS-red?style=flat-square&logo=canvas)
+
 ![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue?style=flat-square&logo=python&logoColor=white)
 ![PyPI Version](https://img.shields.io/badge/pypi-v0.1.0-blue?style=flat-square&logo=pypi&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
