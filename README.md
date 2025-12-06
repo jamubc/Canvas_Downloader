@@ -1,10 +1,10 @@
-# Canvas_Downloader
-![Open Source](https://img.shields.io/badge/Open_Source-brightgreen?style=flat-square)
-![Educational](https://img.shields.io/badge/Educational-blue?style=flat-square)
-![Canvas LMS](https://img.shields.io/badge/Canvas_LMS-red?style=flat-square&logo=canvas)
+# Canvas_Downloader ![Open Source](https://img.shields.io/badge/Open_Source-brightgreen?style=flat-square) ![Educational](https://img.shields.io/badge/Educational-blue?style=flat-square) ![Canvas LMS](https://img.shields.io/badge/Canvas_LMS-red?style=flat-square&logo=canvas)
 ![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue?style=flat-square&logo=python&logoColor=white)
+![PyPI Version](https://img.shields.io/badge/pypi-v0.1.0-blue?style=flat-square&logo=pypi&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
 ![CLI Tool](https://img.shields.io/badge/CLI-Tool-green?style=flat-square&logo=windowsterminal)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/canvas-downloader?style=flat-square)
+
 
 A fast, safe, and customizable tool to download course content from Canvas (Instructure).
 
@@ -26,8 +26,8 @@ A fast, safe, and customizable tool to download course content from Canvas (Inst
 
 ## ⚡ Quick Start
 
-### Option 1: Install via Pip (Recommended)
-This is the easiest way to use the tool.
+### Option 1: Install via Pip (Fastest) - 📦 [![PyPI - Version](https://img.shields.io/pypi/v/canvas_downloader?style=flat-square)](https://pypi.org/project/canvas_downloader/)
+This is the easiest way to use the tool. Get it directly from [PyPI](https://pypi.org/project/canvas_downloader/).
 ```bash
 pip install canvas_downloader
 ```
@@ -36,21 +36,22 @@ Then run it anywhere:
 canvas-downloader --help
 ```
 
-### Option 2: Run from Source
-1. **Clone the repo:**
+### Option 2: Run from Source (with `uv`)
+1. **Install uv** (if needed): `brew install uv` (macOS) or `pip install uv` (others).
+    - (For more help see [uv docs](https://github.com/astral-sh/uv))
+2. **Clone the repo:**
    ```bash
    git clone https://github.com/jamubc/Canvas_Downloader.git
    cd Canvas_Downloader
    ```
-2. **Install dependencies:**
+3. **Setup environment:**
    ```bash
+   uv venv
    uv pip install -r requirements.txt
-   # OR
-   pip install -r requirements.txt
    ```
-3. **Run:**
+4. **Run:**
    ```bash
-   python downloader.py --help
+   uv run python downloader.py --help
    ```
 
 ### Basic Usage
