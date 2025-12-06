@@ -1,0 +1,5 @@
+requests
+tqdm
+beautifulsoup4
+html2text
+pdfkit

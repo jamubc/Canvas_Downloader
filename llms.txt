@@ -1,0 +1,21 @@
+# Canvas_Downloader
+
+> A fast, safe, and customizable CLI tool for students and educators to download course content from Canvas (Instructure).
+
+This tool is designed for users who want to:
+- **Backup courses** to ensure data ownership and safety.
+- **Access content offline** without needing an internet connection.
+- **Feed course content into LLMs** for study assistance or summarization.
+- **Create searchable databases** of their educational materials.
+- **Automate the manual process** of clicking through every file and page.
+
+It allows downloading Files, Modules, Pages, and Assignments (including solutions and submissions). It is strictly read-only, optimized for speed with parallel processing, and works across macOS, Windows, and Linux.
+
+## Documentation
+
+- [README](README.md): The primary documentation containing installation instructions, usage examples, authentication details, and a full list of CLI flags.
+
+## Source Code
+
+- [downloader.py](downloader.py): The main entry point script. Handles argument parsing (CLI interface) and orchestrates the download process using the shared logic.
+- [downloader_shared.py](downloader_shared.py): Contains the core logic for the downloader, including the `CanvasDownloader` class, API interaction methods, file system operations, and sanitization utilities.
