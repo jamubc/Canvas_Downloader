@@ -10,6 +10,11 @@
 
 A fast, safe, and customizable tool to download course content from Canvas (Instructure).
 
+---
+<img width="1280" height="720" alt="canvas_downloader_image-2" src="https://github.com/user-attachments/assets/6346efe3-f2c9-434b-b7c9-49d4a8e966eb" />
+
+---
+
 **Features:**
 - **Safe:** Strictly read-only. Never modifies, deletes, or uploads any data.
 - **Cross-Platform:** Works on macOS, Windows, and Linux.
