@@ -33,6 +33,15 @@ A fast, safe, and customizable tool to download course content from Canvas (Inst
 
 ## ⚡ Quick Start
 
+### Recommended easiest usage:
+1. **Install pipx** (if you don't have it):
+   ```bash
+   brew install pipx
+   pipx ensurepath
+   pipx install canvas_downloader
+   canvas-downloader --help
+   ```
+
 ### Option 1: Install via Pip (Fastest) - 📦 [![PyPI - Version](https://img.shields.io/pypi/v/canvas_downloader?style=flat-square)](https://pypi.org/project/canvas_downloader/)
 This is the easiest way to use the tool. Get it directly from [PyPI](https://pypi.org/project/canvas_downloader/).
 ```bash
@@ -61,7 +70,7 @@ canvas-downloader --help
    uv run python downloader.py --help
    ```
 
-### Basic Usage
+### Basic Usage <-- Copy the text into a text editor, and replace your values, paste into terminal, run. 
 ```bash
 canvas-downloader \
     --api-token YOUR_API_TOKEN \
