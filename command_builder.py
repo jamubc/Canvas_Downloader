@@ -239,7 +239,7 @@ class BuilderRequestHandler(http.server.BaseHTTPRequestHandler):
                     # Use native macOS AppleScript prompt (guaranteed to work without Tkinter)
                     script = 'tell application "System Events" to activate\n' \
                              'tell application "System Events" to return POSIX path of (choose folder with prompt "Select Output Directory")'
-                    result = subprocess.run(['osascript', '-e', script], capture_type=subprocess.PIPE, text=True)
+                    result = subprocess.run(['osascript', '-e', script], capture_output=True, text=True)
                     if result.returncode == 0:
                         selected_dir = result.stdout.strip()
                 elif sys.platform == 'win32':

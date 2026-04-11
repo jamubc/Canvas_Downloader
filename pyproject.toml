@@ -34,11 +34,14 @@ Issues = "https://github.com/jamubc/Canvas_Downloader/issues"
 [project.scripts]
 canvas-downloader = "downloader:main"
 
-[tool.hatch.build.targets.wheel]
-packages = ["."]
+[tool.hatch.build]
 exclude = [
   ".github",
   ".vscode",
   ".venv",
+  "venv",
   "tests",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
