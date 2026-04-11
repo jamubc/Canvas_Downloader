@@ -12,7 +12,19 @@ import downloader_shared as downloader
 
 
 def main() -> None:
+    # Short-circuit standard argparse so users can launch the builder
+    # without providing otherwise required arguments like --api-token
+    import sys
+    if "--builder" in sys.argv:
+        try:
+            import command_builder
+            command_builder.start_server()
+        except ImportError:
+            print("Error: command_builder.py not found.")
+        return
+
     parser = argparse.ArgumentParser(description="Download a specific Canvas course.")
+    parser.add_argument("--builder", action="store_true", help="Open a local interactive web UI to build the command with options")
     parser.add_argument("--api-token", required=True, help="Canvas API token with read‑only permissions")
     parser.add_argument("--course-id", required=True, help="Numeric ID of the Canvas course to download")
     parser.add_argument("--output-dir", required=True, help="Directory where files will be saved")

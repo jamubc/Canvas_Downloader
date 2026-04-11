@@ -70,7 +70,28 @@ canvas-downloader --help
    uv run python downloader.py --help
    ```
 
-### Basic Usage <-- Copy the text into a text editor, and replace your values, paste into terminal, run. 
+---
+
+## 🛠️ The Command Builder (Recommended)
+
+Don't want to mess around with typing complex Terminal commands? We have a **built-in web UI** to click and configure your custom command!
+
+**If you installed via pipx or pip:**
+```bash
+canvas-downloader --builder
+```
+
+**If running from source:**
+```bash
+uv run python downloader.py --builder
+```
+
+This will automatically open a local web server where you can drop in your API Token, Course ID, and check off any settings you want. Once you click "Copy Command", simply paste it back into your terminal to run it!
+
+---
+
+### Manual Basic Usage (Without Builder)
+If you prefer not to use the builder, copy the text below into a text editor, replace your values, paste into terminal, and run. 
 ```bash
 canvas-downloader \
     --api-token YOUR_API_TOKEN \
@@ -84,9 +105,9 @@ canvas-downloader \
 
 ---
 
-## 🛠 Flags
+## 🛠️ Advanced Flags
 
-You can customize the download by adding these flags to the command above:
+If you are using the Web Builder, these options are available as easy-to-use checkboxes. If you are typing the command manually, you can customize the download by adding these flags:
 
 | Flag | Description |
 | :--- | :--- |

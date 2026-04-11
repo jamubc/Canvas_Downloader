@@ -13,6 +13,33 @@ import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
 
+
+def normalize_ignore_patterns(patterns):
+    """Normalize ignore patterns: strip whitespace/quotes, fix curly quotes, lowercase."""
+    if not patterns:
+        return []
+
+    normalized = []
+    for pat in patterns:
+        if pat is None:
+            continue
+        s = str(pat)
+        # Replace common curly quotes with straight quotes so users can paste from rich text
+        s = s.replace("“", "\"").replace("”", "\"").replace("’", "'").replace("‘", "'")
+        s = s.strip()
+
+        # Drop surrounding quotes if present
+        if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+            s = s[1:-1]
+
+        s = s.strip()
+        if not s:
+            continue
+
+        normalized.append(s.lower())
+
+    return normalized
+
 class DownloadStats:
     def __init__(self):
         self.total_files = 0
@@ -107,6 +134,9 @@ def download_specific_courses(course_ids, token, output_dir, base_url="https://c
     Download files and linked module pages from specific Canvas courses.
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    # Normalize ignore patterns once up front
+    ignore_patterns = normalize_ignore_patterns(ignore_patterns)
     
     # Initialize our smart session and stats
     session = CanvasSession(token, optimize=optimize)
@@ -114,6 +144,8 @@ def download_specific_courses(course_ids, token, output_dir, base_url="https://c
 
     for course_id in course_ids:
         print(f"Processing course {course_id}...")
+        if ignore_patterns:
+            print(f"Applying ignore patterns: {ignore_patterns}")
         download_course_files(course_id, session, output_dir, base_url, optimize, stats, force)
         download_course_modules(course_id, session, output_dir, base_url, no_structure, ignore_patterns, optimize, stats, force)
         
@@ -150,15 +182,15 @@ def download_course_assignments(course_id, session, output_dir, base_url, ignore
         assignment_folder = save_folder / safe_name
         assignment_folder.mkdir(parents=True, exist_ok=True)
         
-        # 1. Save Description as HTML
+        # 1. Save Description as HTML (unless ignored)
         description = assignment.get('description')
         if description:
-             # Logic for HTML file sync? It's small, maybe just overwrite or check content match (hard)
-             # Let's just always write it for now, it's fast.
-             with open(assignment_folder / "instructions.html", 'w', encoding='utf-8') as f:
-                 size = f.write(description)
-                 stats.add_download("instructions.html", size)
-             
+             instr_name = "instructions.html"
+             if not should_ignore(instr_name, ignore_patterns):
+                 with open(assignment_folder / instr_name, 'w', encoding='utf-8') as f:
+                     size = f.write(description)
+                     stats.add_download(instr_name, size)
+
              # Parse description for embedded files
              soup = BeautifulSoup(description, "html.parser")
              links = soup.find_all('a', href=True)
@@ -477,8 +509,10 @@ def download_course_modules(course_id, session, output_dir, base_url, no_structu
 def should_ignore(filename, ignore_patterns):
     if not filename or not ignore_patterns:
         return False
+
+    fname = filename.lower()
     for pattern in ignore_patterns:
-        if fnmatch.fnmatch(filename, pattern):
+        if fnmatch.fnmatch(fname, pattern):
             return True
     return False
 
@@ -489,6 +523,10 @@ def download_linked_file(url, session, save_folder, filename=None, ignore_patter
     """Helper: Download linked files inside a module page."""
     if not url.startswith("http"):
          return 
+
+    # If we already know the filename, check ignore patterns BEFORE making HTTP request
+    if filename and should_ignore(filename, ignore_patterns):
+        return
 
     try:
         # We use stream=True so headers are fetched first, allowing filename extraction/check
@@ -534,17 +572,17 @@ def download_linked_file(url, session, save_folder, filename=None, ignore_patter
             else:
                 filename = f"{filename}{guessed_ext}"
 
-    # Validation: If content-type is text/html, this is probably a login page or error, not the file.
+    # Check ignore patterns BEFORE downloading content
+    if should_ignore(filename, ignore_patterns):
+        response.close()
+        print(f"⊘ Skipped (ignored): {filename}")
+        return
+
     ct = response.headers.get('content-type', '').lower()
     if 'text/html' in ct and not filename.endswith('.html'):
          # We can try to see if we can extract a better name or just fail
          # print(f"Warning: {url} returned HTML instead of a file. It might be a preview page.")
-         return 
-
-    
-    if should_ignore(filename, ignore_patterns):
-        print(f"Skipping ignored file: {filename}")
-        return
+         return
 
     file_path = save_folder / filename
     total_size = int(response.headers.get('content-length', 0))

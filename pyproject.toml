@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "canvas_downloader"
-version = "0.1.0"
+version = "0.1.1"
 description = "A fast, safe, and customizable CLI tool to download course content from Canvas."
 readme = "README.md"
 requires-python = ">=3.8"
